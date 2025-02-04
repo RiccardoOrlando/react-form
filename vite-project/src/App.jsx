@@ -1,46 +1,43 @@
 import { useState } from "react";
 
 export default function App() {
-  const [Articles, setArticlesName] = useState([
-    "Libro",
-    "Quaderno",
-    "Foglio",
-  ]);
-  const [newArticles, setNewArticles] = useState('');
+  const [Articles, setArticlesName] = useState(["Libro", "Quaderno", "Foglio"]);
+  const [newArticles, setNewArticles] = useState("");
 
-  const addArticles = (e) =>{
-    e.preventDefault()
+  const addArticles = (e) => {
+    e.preventDefault();
     setArticlesName([...Articles, newArticles]);
-    setNewArticles(""); 
-  }
+    setNewArticles("");
+  };
 
-  const removeArticle = (i) =>{
-    const UpdatedArticleList = Articles.filter((Articles, index) => {
-      return index !== i
-    })
-    setArticlesName(UpdatedArticleList)
-  }
-
-console.log(removeArticle)
+  const removeArticle = (i) => {
+    const UpdatedArticleList = Articles.filter((Article, index) => {
+      return index !== i;
+    });
+    setArticlesName(UpdatedArticleList);
+  };
 
   return (
     <>
+      <ul>
+        {Articles.map((Article, i) => (
+          <li key={i}>
+            {Article}{" "}
+            <button type="button" onClick={() => removeArticle(i)}>
+              🗑
+            </button>
+          </li>
+        ))}
+      </ul>
       <form onSubmit={addArticles}>
-        <ul>
-          {Articles.map((Articles, i) =>(
-            <li key={i}>
-              {Articles}
-              <button onClick={() => removeArticle(i)}>🗑</button>
-            </li>
-          ))
-          }
-        </ul>
-        <input 
+        <input
           type="text"
           value={newArticles}
-          onChange={e => {setNewArticles(e.target.value)}}
-          />
-        <button>Aggiungi Articolo</button>
+          onChange={(e) => {
+            setNewArticles(e.target.value);
+          }}
+        />
+        <button type="submit">Aggiungi Articolo</button>
       </form>
     </>
   );
